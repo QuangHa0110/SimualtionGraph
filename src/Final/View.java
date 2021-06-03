@@ -222,6 +222,7 @@ public class View extends JFrame {
 		contentPane.add(jScrollPane2);
 		jScrollPane2.setVisible(false);
 
+		// nút bắt đầu trong phần shortest path
 		JButton btnShortestPath = new JButton("Bắt đầu");
 		btnShortestPath.addMouseListener(new MouseAdapter() {
 			@Override
@@ -319,6 +320,7 @@ public class View extends JFrame {
 		});
 		// End
 
+		// nút đi tiếp
 		btnNewButton_1.setBounds(123, 265, 79, 40);
 		panel_1.add(btnNewButton_1);
 		btnNewButton_1.setVisible(true);
@@ -359,53 +361,158 @@ public class View extends JFrame {
 								countStep);
 
 					}
-					countStepFromStartToNow = countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
-							.get(-1 + chooseNode);
-					if (countStepFromStartToNow > 0) {
-						// Nếu đường này đã đi rồi thì vào
 
-						if (countStepFromNowToEnd > 0) {
-							// Nếu có đường từ đỉnh hiện tại đến đích thì vào
-							if (counStepFromStartToEnd > 0) {
-								// Nếu có đường từ đỉnh đầu đến đỉnh cuối
-								if (countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
-										.get(-1 + chooseNode) + countStepFromNowToEnd < counStepFromStartToEnd) {
-									// Nếu số bước từ đỉnh đầu đến đỉnh hiện tại cộng số bước trước đây đã đi từ
-									// đỉnh hiện tại đến đỉnh cuối nhỏ hơn số bước trước đây đa đi từ đỉnh đầu đến
-									// đỉnh cuối thì cập nhật
+					// End
 
-									listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(
-											-1 + Integer.parseInt(jTextEndPoint.getText()),
-											listPath.get(Integer.parseInt(jTextBeginPoint.getText()))
-													.get(-1 + chooseNode)
-													+ listPath.get(chooseNode)
-															.get(-1 + Integer.parseInt(jTextEndPoint.getText())));
-									countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(
-											-1 + Integer.parseInt(jTextEndPoint.getText()),
-											countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
-													.get(-1 + chooseNode) + countStepFromNowToEnd);
+					// //Chức năng ghép nối
+					for (int i = 1; i <= dataInput.getMaxDinh(); i++) {
+						if (countStepTwoNode.get(i).get(-1 + Integer.parseInt(jTextBeginPoint.getText())) > 0) {
+							if (countStepTwoNode.get(i).get(-1 + chooseNode) > 0) {
+								if (countStepTwoNode.get(i).get(-1 + Integer.parseInt(jTextBeginPoint.getText()))
+										+ countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+												.get(-1 + chooseNode) < countStepTwoNode.get(i).get(-1 + chooseNode)) {
+									countStepTwoNode.get(i).set(-1 + chooseNode,
+											countStepTwoNode.get(i)
+													.get(-1 + Integer.parseInt(jTextBeginPoint.getText()))
+													+ countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+															.get(-1 + chooseNode));
+									listPath.get(i).set(-1 + chooseNode,
+											listPath.get(i).get(-1 + Integer.parseInt(jTextBeginPoint.getText()))
+													+ listPath.get(Integer.parseInt(jTextBeginPoint.getText()))
+															.get(-1 + chooseNode));
 
 								}
 							} else {
-								// Nếu không có đường đi từ đỉnh đầu đến đỉnh cuối thì cập nhật
-								listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(
-										-1 + Integer.parseInt(jTextEndPoint.getText()),
-										listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1 + chooseNode)
-												+ listPath.get(chooseNode)
-														.get(-1 + Integer.parseInt(jTextEndPoint.getText())));
-								countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(
-										-1 + Integer.parseInt(jTextEndPoint.getText()),
-										countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
-												.get(-1 + chooseNode) + countStepFromNowToEnd);
+								countStepTwoNode.get(i).set(-1 + chooseNode,
+										countStepTwoNode.get(i).get(-1 + Integer.parseInt(jTextBeginPoint.getText()))
+												+ countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+														.get(-1 + chooseNode));
+								listPath.get(i).set(-1 + chooseNode,
+										listPath.get(i).get(-1 + Integer.parseInt(jTextBeginPoint.getText())) + listPath
+												.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1 + chooseNode));
 
 							}
 						}
 					}
+
+					//
+					//
+					for (int i = 1; i <= dataInput.getMaxDinh(); i++) {
+						if (countStepTwoNode.get(chooseNode).get(-1 + i) > 0) {
+							if (countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1 + i) > 0) {
+								if (countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+										.get(-1 + chooseNode)
+										+ countStepTwoNode.get(chooseNode).get(-1 + i) < countStepTwoNode
+												.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1 + i)) {
+									countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+											.set(-1 + i,
+													countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+															.get(-1 + chooseNode)
+															+ countStepTwoNode.get(chooseNode).get(-1 + i));
+									listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1 + i,
+											listPath.get(Integer.parseInt(jTextBeginPoint.getText()))
+													.get(-1 + chooseNode) + listPath.get(chooseNode).get(-1 + i));
+									for (int j = 1; j <= dataInput.getMaxDinh(); j++) {
+										if (countStepTwoNode.get(j).get(-1 + chooseNode) > 0) {
+											if (countStepTwoNode.get(j).get(-1 + i) > 0) {
+												if (countStepTwoNode.get(j).get(-1 + chooseNode)
+														+ countStepTwoNode.get(chooseNode)
+																.get(-1 + i) < countStepTwoNode.get(j).get(-1 + i)) {
+													countStepTwoNode.get(j).set(-1 + i,
+															countStepTwoNode.get(j).get(-1 + chooseNode)
+																	+ countStepTwoNode.get(chooseNode).get(-1 + i));
+													listPath.get(j).set(-1 + i, listPath.get(j).get(-1 + chooseNode)
+															+ listPath.get(chooseNode).get(-1 + i));
+
+												}
+											} else {
+												countStepTwoNode.get(j).set(-1 + i,
+														countStepTwoNode.get(j).get(-1 + chooseNode)
+																+ countStepTwoNode.get(chooseNode).get(-1 + i));
+												listPath.get(j).set(-1 + i, listPath.get(j).get(-1 + chooseNode)
+														+ listPath.get(chooseNode).get(-1 + i));
+
+											}
+										}
+									}
+
+								}
+							} else {
+								countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+										.set(-1 + i,
+												countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText()))
+														.get(-1 + chooseNode)
+														+ countStepTwoNode.get(chooseNode).get(-1 + i));
+								listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1 + i,
+										listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1 + chooseNode)
+												+ listPath.get(chooseNode).get(-1 + i));
+								for (int j = 1; j <= dataInput.getMaxDinh(); j++) {
+									if (countStepTwoNode.get(j).get(-1 + chooseNode) > 0) {
+										if (countStepTwoNode.get(j).get(-1 + i) > 0) {
+											if (countStepTwoNode.get(j).get(-1 + chooseNode)
+													+ countStepTwoNode.get(chooseNode).get(-1 + i) < countStepTwoNode
+															.get(j).get(-1 + i)) {
+												countStepTwoNode.get(j).set(-1 + i,
+														countStepTwoNode.get(j).get(-1 + chooseNode)
+																+ countStepTwoNode.get(chooseNode).get(-1 + i));
+												listPath.get(j).set(-1 + i, listPath.get(j).get(-1 + chooseNode)
+														+ listPath.get(chooseNode).get(-1 + i));
+
+											}
+										} else {
+											countStepTwoNode.get(j).set(-1 + i,
+													countStepTwoNode.get(j).get(-1 + chooseNode)
+															+ countStepTwoNode.get(chooseNode).get(-1 + i));
+											listPath.get(j).set(-1 + i, listPath.get(j).get(-1 + chooseNode)
+													+ listPath.get(chooseNode).get(-1 + i));
+
+										}
+									}
+								}
+
+							}
+						}
+					}
+					//
+					// countStepFromStartToNow=countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode);
+					// if(countStepFromStartToNow>0) {
+					// //Nếu đường này đã đi rồi thì vào
+					//
+					//
+					// if(countStepFromNowToEnd >0) {
+					// //Nếu có đường từ đỉnh hiện tại đến đích thì vào
+					// if( counStepFromStartToEnd>0){
+					// //Nếu có đường từ đỉnh đầu đến đỉnh cuối
+					// if(countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd<counStepFromStartToEnd)
+					// {
+					// // Nếu số bước từ đỉnh đầu đến đỉnh hiện tại cộng số bước trước đây đã đi từ
+					// đỉnh hiện tại đến đỉnh cuối nhỏ hơn số bước trước đây đa đi từ đỉnh đầu đến
+					// đỉnh cuối thì cập nhật
+					//
+					// listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+listPath.get(chooseNode).get(-1+Integer.parseInt(jTextEndPoint.getText())))
+					// ;
+					// countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd);
+					//
+					// }
+					// }else {
+					// //Nếu không có đường đi từ đỉnh đầu đến đỉnh cuối thì cập nhật
+					// listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+listPath.get(chooseNode).get(-1+Integer.parseInt(jTextEndPoint.getText())))
+					// ;
+					// countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd);
+					//
+					// }
+					// }
+					// }
+
 					// End
 
 					if (countStep <= maxStep) {
 
 						numberCurrentStep.setText("" + countStep);
+						//
+						// demo.setColorNode(b.getSelectedValue().toString());
+						// String id = begin + "_" + b.getSelectedValue().toString();
+						// demo.setColorEdge(id);
 
 						boolean check = true;
 
@@ -416,7 +523,9 @@ public class View extends JFrame {
 								if (!isContinute()) {
 									check = false;
 									btnNewButton_1.setEnabled(false);
+
 								}
+
 							}
 
 							// Fix
@@ -486,6 +595,8 @@ public class View extends JFrame {
 										.get(-1 + Integer.parseInt(jTextEndPoint.getText())) <= maxStep
 								&& listPath.get(Integer.parseInt(begin))
 										.get(-1 + Integer.parseInt(jTextEndPoint.getText())) != "")) {
+							System.out.println(listPath.get(Integer.parseInt(begin))
+									.get(-1 + Integer.parseInt(jTextEndPoint.getText())));
 							btnNewButton_3.setEnabled(true);
 
 						} else {
@@ -495,6 +606,7 @@ public class View extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "Đã đi hết số bước đưa ra");
 					}
+
 				}
 
 			}
@@ -542,15 +654,25 @@ public class View extends JFrame {
 					for (int i = 0; i < listNodePath.size(); i++) {
 						if (Integer.parseInt(begin) == listNodePath.get(i)) {
 							checkNode = true;
+
 						}
 					}
 					if (checkNode == false) {
 						demo.setColorNodeDefault(begin);
 					}
 					if (!(jTextBeginPoint.getText() + " " + cPath)
-							.contains((listNodePath.get(-1 + listNodePath.size()) + " " + begin))) {
+							.contains((listNodePath.get(-1 + listNodePath.size()) + " " + begin + " "))) {
 						demo.setColorEdgeDefault(listNodePath.get(-1 + listNodePath.size()), begin);
+					} else {
+						if ((jTextBeginPoint.getText() + " " + cPath)
+								.indexOf((listNodePath.get(-1 + listNodePath.size()) + " " + begin + " ")) > 0) {
+							if (!(jTextBeginPoint.getText() + " " + cPath)
+									.contains((" " + listNodePath.get(-1 + listNodePath.size()) + " " + begin + " "))) {
+								demo.setColorEdgeDefault(listNodePath.get(-1 + listNodePath.size()), begin);
+							}
+						}
 					}
+
 					begin = "" + listNodePath.get(-1 + listNodePath.size());
 
 					b.setListData(dataInput.getDanhSachDinh().get(Integer.parseInt(begin)).toArray());
@@ -567,7 +689,7 @@ public class View extends JFrame {
 					CurrentNode.setText(begin);
 					b.setListData(dataInput.getDanhSachDinh().get(Integer.parseInt(begin)).toArray());
 					b.setSelectedIndex(0);
-					demo.setColorNode(begin);
+					demo.setColorNode(jTextBeginPoint.getText());
 					JOptionPane.showMessageDialog(null, "Bạn đã ở đỉnh xuất phát");
 					btnNewButton.setEnabled(false);
 
@@ -576,12 +698,13 @@ public class View extends JFrame {
 				if (listPath.get(Integer.parseInt(begin)).get(-1 + Integer.parseInt(jTextEndPoint.getText())) != "") {
 					btnNewButton_3.setEnabled(true);
 				}
-//End
 			}
 
 //						
 
 		});
+btnNewButton_3.setEnabled(false);
+		// nút bắt đầu
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -599,9 +722,13 @@ public class View extends JFrame {
 				if (textField.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Vui lòng nhập số bước đi ");
 				} else if (validation(jTextBeginPoint, jTextEndPoint, dataInput.getMaxDinh())) {
+					
 					String s = textField.getText();
 					begin = jTextBeginPoint.getText();
-
+					if(dataInput.getDanhSachDinh().get(Integer.parseInt(begin)).size() <=0) {
+						JOptionPane.showMessageDialog(null, "Đỉnh bắt đầu không có được đi đến đỉnh nào khác");
+						return;
+					}
 					demo.setColorNode(begin);
 					CurrentNode.setText(begin);
 					maxStep = Integer.parseInt(s);
@@ -751,8 +878,6 @@ public class View extends JFrame {
 			}
 		});
 		File.add(OpenFile);
-
-
 
 		JMenuItem SaveImage = new JMenuItem("Save Image");
 		SaveImage.addActionListener(new ActionListener() {

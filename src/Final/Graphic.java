@@ -118,12 +118,12 @@ public class Graphic {
 	void zoomGraphMouseWheelMoved(MouseWheelEvent mwe, ViewPanel view_panel) {
 		if (Event.ALT_MASK != 0) {
 			if (mwe.getWheelRotation() > 0) {
-				double new_view_percent = view_panel.getCamera().getViewPercent() + 0.05;
+				double new_view_percent = view_panel.getCamera().getViewPercent() + 0.02;
 				view_panel.getCamera().setViewPercent(new_view_percent);
 			} else if (mwe.getWheelRotation() < 0) {
 				double current_view_percent = view_panel.getCamera().getViewPercent();
 				if (current_view_percent > 0.05) {
-					view_panel.getCamera().setViewPercent(current_view_percent - 0.05);
+					view_panel.getCamera().setViewPercent(current_view_percent - 0.02);
 				}
 			}
 		}
