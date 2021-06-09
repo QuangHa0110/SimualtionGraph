@@ -473,39 +473,7 @@ public class View extends JFrame {
 							}
 						}
 					}
-					//
-					// countStepFromStartToNow=countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode);
-					// if(countStepFromStartToNow>0) {
-					// //Nếu đường này đã đi rồi thì vào
-					//
-					//
-					// if(countStepFromNowToEnd >0) {
-					// //Nếu có đường từ đỉnh hiện tại đến đích thì vào
-					// if( counStepFromStartToEnd>0){
-					// //Nếu có đường từ đỉnh đầu đến đỉnh cuối
-					// if(countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd<counStepFromStartToEnd)
-					// {
-					// // Nếu số bước từ đỉnh đầu đến đỉnh hiện tại cộng số bước trước đây đã đi từ
-					// đỉnh hiện tại đến đỉnh cuối nhỏ hơn số bước trước đây đa đi từ đỉnh đầu đến
-					// đỉnh cuối thì cập nhật
-					//
-					// listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+listPath.get(chooseNode).get(-1+Integer.parseInt(jTextEndPoint.getText())))
-					// ;
-					// countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd);
-					//
-					// }
-					// }else {
-					// //Nếu không có đường đi từ đỉnh đầu đến đỉnh cuối thì cập nhật
-					// listPath.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),listPath.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+listPath.get(chooseNode).get(-1+Integer.parseInt(jTextEndPoint.getText())))
-					// ;
-					// countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).set(-1+Integer.parseInt(jTextEndPoint.getText()),countStepTwoNode.get(Integer.parseInt(jTextBeginPoint.getText())).get(-1+chooseNode)+countStepFromNowToEnd);
-					//
-					// }
-					// }
-					// }
-
-					// End
-
+			
 					if (countStep <= maxStep) {
 
 						numberCurrentStep.setText("" + countStep);

@@ -25,7 +25,6 @@ public class BFS {
 		color[u] = 'G';
 	
 		while (!Q.isEmpty()) {
-//			int v = Q.peek();
 			int v =Q.poll();
 			listPoint.add(v);
 			
